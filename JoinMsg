@@ -1,0 +1,23 @@
+package com.src.JoinMsg;
+
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class JoinMsg extends JavaPlugin {
+	
+	private static JoinMsg plugin;
+	
+	public void onEnable()
+	  {
+		plugin = this;
+		
+		Bukkit.getServer().getPluginManager().registerEvents(new PlayerConnect(), this);
+	  }
+	
+	public static JoinMsg getInstance() {
+		if (plugin == null)
+			plugin = new JoinMsg();
+		return plugin;
+	}
+	
+}

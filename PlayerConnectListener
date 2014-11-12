@@ -1,0 +1,38 @@
+package com.src.JoinMsg;
+
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+public class PlayerConnect implements Listener {
+
+	@EventHandler
+	public void onJoin(final PlayerJoinEvent e) {
+
+		TitleManager.sendTimings(e.getPlayer(), 20, 20, 20);
+
+		TitleManager.sendTitle(e.getPlayer(),
+				"{'color': 'green', 'bold' : 'true', 'text': '3'}");
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(JoinMsg.getInstance(), new Runnable() {
+			
+			@Override
+			public void run() {
+				TitleManager.sendTitle(e.getPlayer(),
+						"{'color': 'yellow', 'bold' : 'true', 'text': '2'}");
+				
+			}
+		}, 20);
+		
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(JoinMsg.getInstance(), new Runnable() {
+		@Override
+		public void run() {
+			TitleManager.sendTitle(e.getPlayer(),
+					"{'color': 'red', 'bold' : 'true', 'text': '3'}");
+			
+		}
+	}, 20);
+		
+	}
+}

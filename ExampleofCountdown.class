@@ -1,0 +1,64 @@
+package src.com.GhostMansion.threads;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import src.com.GhostMansion.GhostMansion;
+import src.com.GhostMansion.Utils.ChatUtilities;
+import src.com.GhostMansion.Utils.TitleManager;
+import src.com.GhostMansion.handlers.Game;
+
+public class StartCountdown extends BukkitRunnable {
+
+	GhostMansion plugin;
+	
+	public StartCountdown(GhostMansion pl){
+		plugin = pl;
+	}
+	
+	public static int timeUntilStart;
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void run() {
+		
+		if(Bukkit.getOnlinePlayers().length >= 2){
+			Game.setCanStart(true);
+		}
+		
+				if (timeUntilStart == 0) {
+					if(!Game.canStart()){
+						plugin.restartCountdown();
+						ChatUtilities.broadcast(ChatColor.RED + "Can not start game. Countdown restarting");
+						return;
+					}
+					if(Game.canStart()){
+						ChatUtilities.broadcast(ChatColor.GREEN + "Game Starting!");
+					Game.start();
+					plugin.stopCountdown();
+					}
+				}
+				if (timeUntilStart % 10 == 0 || timeUntilStart < 10 ) {
+					ChatUtilities.broadcast(String.valueOf(timeUntilStart)
+							+ " seconds until game starts!");
+				}
+				for(Player p : Bukkit.getOnlinePlayers()){
+				if(timeUntilStart == 3){
+					TitleManager.sendTitle(p,
+							"{'color': 'green', 'bold' : 'true', 'text': '3'}");
+				}
+				if(timeUntilStart == 2){
+					TitleManager.sendTitle(p.getPlayer(),
+							"{'color': 'yellow', 'bold' : 'true', 'text': '2'}");
+				}
+				if(timeUntilStart == 1){
+					TitleManager.sendTitle(p.getPlayer(),
+							"{'color': 'red', 'bold' : 'true', 'text': '1'}");
+				
+				}
+				}
+				timeUntilStart -= 1;
+			}
+}

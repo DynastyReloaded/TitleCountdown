@@ -11,7 +11,7 @@ public class JoinMsg extends JavaPlugin {
 	  {
 		plugin = this;
 		
-		Bukkit.getServer().getPluginManager().registerEvents(new PlayerConnect(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new PlayerConnectListener(), this);
 	  }
 	
 	public static JoinMsg getInstance() {
